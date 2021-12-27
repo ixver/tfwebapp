@@ -1,0 +1,12 @@
+{
+	"home": {
+		"headtext": "TTILE",
+		"bodytext": "\"enter a description here"
+	},
+	"portfolio": {
+		"url": "localhost:3000"
+	},
+	"app": {
+		"name": "appname"
+	}
+}

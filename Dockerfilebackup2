@@ -1,0 +1,33 @@
+# stage 0 - build frontend assets
+FROM node:14-alpine as react-build
+WORKDIR /app
+COPY package.json ./
+RUN npm install
+RUN npm i @tensorflow/tfjs-core
+RUN npm i @chakra-ui/react @emotion/react@^11 @emotion/styled@^11 framer-motion@^4
+RUN npm i @chakra-ui/theme
+RUN npm i @tensorflow/tfjs
+RUN npm i @tensorflow-models/face-landmarks-detection
+RUN npm i @tensorflow-models/handpose
+RUN npm i fingerpose
+RUN npm i firebase
+RUN npm i react-firebase --legacy-peer-deps
+COPY . ./
+RUN npm run build
+
+# RUN yarn
+# RUN yarn install
+# COPY . .
+# RUN yarn build
+
+
+# stage 1 - server frontend assets
+FROM nginx:alpine
+COPY nginx.conf /etc/nginx/conf.d/configfile.template
+
+COPY --from=react-build /app/build /usr/share/nginx/html
+
+ENV PORT 8080
+ENV HOST 0.0.0.0
+EXPOSE 8080
+CMD sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/configfile.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"

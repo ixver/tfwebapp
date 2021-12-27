@@ -12,9 +12,9 @@
 /build
 
 # misc
-Dockerfile
-Dockerfilebackup
-Dockerfilebackup2
+Dockerfile*
+Dockerfilebackup*
+Dockerfilebackup2*
 .DS_Store
 .env
 .env.local
